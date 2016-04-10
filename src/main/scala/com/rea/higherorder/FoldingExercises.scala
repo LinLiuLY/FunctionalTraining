@@ -60,6 +60,8 @@ object FoldingExercises {
   def filter[A](x: List[A], f: A => Boolean): List[A] = foldLeft(Nil, x)((new_list, _) => { 
     if f(_) 
         x :: new_list
+    else
+        new_list    
     }) 
 
 
@@ -77,7 +79,8 @@ object FoldingExercises {
   def maximum(x: List[Int]): Int = foldLeft(0, x)((max, _) => {
     if max <= _ 
       max = _
-
+    else
+      max
     })
 
 
