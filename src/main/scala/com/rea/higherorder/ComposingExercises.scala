@@ -33,10 +33,16 @@ object ComposingExercises {
 
   println(minusThree(5))
 
+
   // 3. How do we create a new function from addTwo and minusThree?
   val addTwoMinusThree: Int => Int = addTwo compose minusThree
 
   println(addTwoMinusThree(5))
+
+  //if def addTwo(x: Int)= add(2,x) 
+  //if def minusThree(x: Int)= subtract(x,3)
+  //Then al addTwoMinusThree: Int => Int = addTwo _ compose minusThree 
+  //should add the underscore
 
   
   def prettyPrint(i:Int) = s"The number is $i"
