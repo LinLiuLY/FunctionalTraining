@@ -29,25 +29,61 @@ object RecursionExercises1 {
   def minusOne(n: Int) = n - 1
 
   // Add two non-negative Integers together.  You are only allowed to use plusOne and minusOne above
-  def add(a: Int, b: Int): Int = ???
+  // def add(a: Int, b: Int): Int = ???
+
+  def add(a: Int, b: Int): Int = plusOne(a) + minusOne(b)
+
+  println(add(5,6))
 
   // You are not permitted to use any list functions such as map, flatMap, ++, flatten etc
-  def sum(l: List[Int]): Int = ???
+  //def sum(l: List[Int]): Int = ???
+
+  
+  def sum(l: List[Int]): Int = l match {
+    case h :: t => h + sum(t)
+    case Nil => 0 //Nil– Represents an emptry List of anything of zero length. Its not that it refers to nothing but it refers to List which has no contents
+  }
+
+  println(sum(List(1, 2, 3, 9)))
 
   //Again no list functions are permitted for the following
-  def length[A](x: List[A]): Int = ???
+  //def length[A](x: List[A]): Int = ???
+
+  def length[A](x: List[A]): Int =  x match {
+    case h :: t =>  1 + length(t)
+    case Nil => 0
+  }
+
+  println(length(List(1, 2, 3, 9)))
 
   // Do you notice anything similar between sum and length? Hmm...
 
   // Mapping over a list.  You are given a List of type A and a function converting an A to a B
   // and you give back a list of type B.  No list functions allowed!
-  def map[A, B](x: List[A], f: A => B): List[B] = ???
+  def map[A, B](x: List[A], f: A => B): List[B] = x match {
+    case h :: t => f(h) :: map(t, f)
+    case Nil => Nil
+  }
+
+  println(map(List(1, 2, 3, 9), (x:Int) => x+1 ))
+
 
   // Given a function from A => Boolean, return a list with only those item where the function returned true.
-  def filter[A](x: List[A], f: A => Boolean): List[A] = ???
+  //def filter[A](x: List[A], f: A => Boolean): List[A] = ???
+
+  def filter[A](x: List[A], f: A => Boolean): List[A] = x match {
+    case h :: t if f(h) => h :: filter(t, f) 
+    case h :: t if !f(h) => filter(t, f)
+    case Nil => Nil
+  }  
+
+  println(filter(List(1, 2, 3, 9), (x:Int) => x > 2 ))
+
 
   // This pattern should be familiar by now... psst... look at add.
-  def append[A](x: List[A], y: List[A]): List[A] = ???
+  //def append[A](x: List[A], y: List[A]): List[A] = ???
+
+  def append[A](x: List[A], y: List[A]): List[A] = ???  
 
   // Flatten a list of lists to a single list.  Remember you can't use list.flatten.  Can you use a previous
   // solution to solve this one?
