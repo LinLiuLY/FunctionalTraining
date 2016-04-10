@@ -52,39 +52,36 @@ object FoldingExercises {
   def length[A](x: List[A]): Int = foldLeft(0, x)((sum, _) => sum + 1)
 
 
+  //List(1,2,3).foldRight(List[Int]())((element,result) => (element + 1) :: result)
+  def map[A, B](x: List[A])(f: A => B): List[B] = foldRight(List[B](), x)((element, result) => f(element) :: result)
 
-  def map[A, B](x: List[A])(f: A => B): List[B] = foldLeft(Nil, x)((new_list, _) => f(_) :: new_list)
-
-
-
-  def filter[A](x: List[A], f: A => Boolean): List[A] = foldLeft(Nil, x)((new_list, _) => { 
-    if f(_) 
-        x :: new_list
-    else
-        new_list    
-    }) 
+ 
+  //List(1,2,3).foldRight(List[Int]())( (element, result) => if (element >=2) (element :: result) else result ) 
+  def filter[A](x: List[A], f: A => Boolean): List[A] = foldRight(List[A](), x)( (element, result) => if (element >=2) (element :: result) else result )
 
 
+ //List(1,2,3).foldRight(List(4,5,6))((element, result) => element :: result)
+ //result: List(1, 2, 3, 4, 5, 6)
 
-  def append[A](x: List[A], y: List[A]): List[A] = foldLeft(y,x)((newList, _) => _ :: newList)
-
-
-  def flatten[A](x: List[List[A]]): List[A] = foldLeft(List[A](), x)((newList, _) => append(newList, _))
-
-
-  def flatMap[A, B](x: List[A], f: A => List[B]): List[B] = foldLeft(List[B](), x)((newList, _) => append(f(_), newList))
+  def append[A](x: List[A], y: List[A]): List[A] = foldRight(y,x)((element, result) => element :: result)
 
 
+ //List(List(1,2), List(9,0)).foldRight(List[Int]())((element, result) => element ++ result)
+ //result: List(1, 2, 9, 0)
+  def flatten[A](x: List[List[A]]): List[A] = foldRight(List[A](), x)((element, result) => append(element, result))
+
+
+  def flatMap[A, B](x: List[A], f: A => List[B]): List[B] = flatten(map(x)(f))
+
+
+  //List(1,2,3).foldLeft(0)( (max, element) => if (max <= element) element else max )
+  //result: 3
   // Maximum of the empty list is 0
-  def maximum(x: List[Int]): Int = foldLeft(0, x)((max, _) => {
-    if max <= _ 
-      max = _
-    else
-      max
-    })
+  def maximum(x: List[Int]): Int = foldLeft(0, x)((max, element) => if (max <= element) element else max )
 
 
-
-  def reverse[A](x: List[A]): List[A] = foldRight(Nil, x)((newList, _) => _ :: newList)
+  //List(1,2,3).foldLeft(List[Int]())( (result, element) => element :: result)
+  //result: List(3, 2, 1)
+  def reverse[A](x: List[A]): List[A] = foldLeft(List[A](), x)((result, element) => element :: result)
 
 }
