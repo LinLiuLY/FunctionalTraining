@@ -81,21 +81,52 @@ object RecursionExercises1 {
 
 
   // This pattern should be familiar by now... psst... look at add.
-  //def append[A](x: List[A], y: List[A]): List[A] = ???
+  def append[A](x: List[A], y: List[A]): List[A] = x match {
+    case Nil => y
+    case h :: t => h :: append(t, y)
+  }
 
-  def append[A](x: List[A], y: List[A]): List[A] = ???  
+  println(append(List(1,2,3), List(0,9,8)))
 
   // Flatten a list of lists to a single list.  Remember you can't use list.flatten.  Can you use a previous
   // solution to solve this one?
-  def flatten[A](x: List[List[A]]): List[A] = ???
+  //def flatten[A](x: List[List[A]]): List[A] = ???
+
+  def flatten[A](x: List[List[A]]): List[A] = x match {
+    case h :: t => append(h , flatten(t))
+    case Nil => Nil
+  }
+
+  println(flatten(List(List(1,2,3), List(4,5,6))))
 
   // Follow the types.  You've done a great job getting here. Follow the types.
-  def flatMap[A, B](x: List[A], f: A => List[B]): List[B] = ???
+  // def flatMap[A, B](x: List[A], f: A => List[B]): List[B] = ???
+
+  def flatMap[A, B](x: List[A], f: A => List[B]): List[B] = x match {
+    case h :: t => flatten(map(x, f))
+    case Nil => Nil
+  }
+
+  println(flatMap(List(1,2,3), (x : Int) => List(x+1, x , x-1)))
 
   // Maximum of the empty list is 0
-  def maximum(x: List[Int]): Int = ???
+  //def maximum(x: List[Int]): Int = ???
+
+  def maximum(x: List[Int]): Int = x match {
+    case Nil => 0
+    case h :: t if h > maximum(t) => h 
+    case h :: t if h <= maximum(t) => maximum(t)  
+  }
+
+  println(maximum(List(3,5,6,0,9,14)))
+
 
   // Reverse a list
-  def reverse[A](x: List[A]): List[A] = ???
+  def reverse[A](x: List[A]): List[A] = x case {
+    case h :: t => append(reverse(t), List(h))
+    case Nil => Nil
+  }
+
+  println(reverse(List(5,3,9)))
 
 }
