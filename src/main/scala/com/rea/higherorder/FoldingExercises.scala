@@ -25,11 +25,16 @@ object FoldingExercises {
    * Good luck!
    *
    */
+
+  //The foldLeft function goes through the whole List, from head to tail
+
   def foldLeft[A, B](initialValue: B, list: List[A])(f: (B, A) => B): B = ???
 
   /**
    * foldRight is the same as foldLeft, except it processes the list from right to left.
    */
+
+   //The foldRight function goes through the whole List, from tail to head
   def foldRight[A,B](initialValue:B, list: List[A])(f: (A,B) => B):B = ???
 
   /**
@@ -42,21 +47,41 @@ object FoldingExercises {
 
   def sum(l: List[Int]): Int = foldLeft(0, l)(_+_) //The first ‘_’ stands for ‘r’, and the second one stands for ‘c’.
 
+
+
   def length[A](x: List[A]): Int = foldLeft(0, x)((sum, _) => sum + 1)
 
-  def map[A, B](x: List[A])(f: A => B): List[B] = 
 
-  def filter[A](x: List[A], f: A => Boolean): List[A] = 
 
-  def append[A](x: List[A], y: List[A]): List[A] = 
+  def map[A, B](x: List[A])(f: A => B): List[B] = foldLeft(Nil, x)((new_list, _) => f(_) :: new_list)
 
-  def flatten[A](x: List[List[A]]): List[A] = 
 
-  def flatMap[A, B](x: List[A], f: A => List[B]): List[B] = 
+
+  def filter[A](x: List[A], f: A => Boolean): List[A] = foldLeft(Nil, x)((new_list, _) => { 
+    if f(_) 
+        x :: new_list
+    }) 
+
+
+
+  def append[A](x: List[A], y: List[A]): List[A] = foldLeft(y,x)((newList, _) => _ :: newList)
+
+
+  def flatten[A](x: List[List[A]]): List[A] = foldLeft(List[A](), x)((newList, _) => append(newList, _))
+
+
+  def flatMap[A, B](x: List[A], f: A => List[B]): List[B] = foldLeft(List[B](), x)((newList, _) => append(f(_), newList))
+
 
   // Maximum of the empty list is 0
-  def maximum(x: List[Int]): Int = 
+  def maximum(x: List[Int]): Int = foldLeft(0, x)((max, _) => {
+    if max <= _ 
+      max = _
 
-  def reverse[A](x: List[A]): List[A] = 
+    })
+
+
+
+  def reverse[A](x: List[A]): List[A] = foldRight(Nil, x)((newList, _) => _ :: newList)
 
 }
