@@ -4,6 +4,9 @@ package com.rea.higherorder
  * DO NOT ATTEMPT these exercises until you've completed the recursion ones.
  */
 
+ // ref: https://oldfashionedsoftware.com/2009/07/30/lots-and-lots-of-foldleft-examples/
+
+
 object FoldingExercises {
 
   /**
@@ -34,23 +37,26 @@ object FoldingExercises {
    * foldLeft or foldRight.
    */
 
-  def sum(l: List[Int]): Int = ???
+   //def sum(list: List[Int]): Int = list.foldLeft(0)((r,c) => r+c)
+   //The foldLeft method takes that initial value, 0, and the function literal, and it begins to apply the function on each member of the list (parameter ‘c’), updating the result value (parameter ‘r’) each time. That result value that we call ‘r’ is sometimes called the accumulator, since it accumulates the results of the function calls.
 
-  def length[A](x: List[A]): Int = ???
+  def sum(l: List[Int]): Int = foldLeft(0, l)(_+_) //The first ‘_’ stands for ‘r’, and the second one stands for ‘c’.
 
-  def map[A, B](x: List[A])(f: A => B): List[B] = ???
+  def length[A](x: List[A]): Int = foldLeft(0, x)((sum, _) => sum + 1)
 
-  def filter[A](x: List[A], f: A => Boolean): List[A] = ???
+  def map[A, B](x: List[A])(f: A => B): List[B] = 
 
-  def append[A](x: List[A], y: List[A]): List[A] = ???
+  def filter[A](x: List[A], f: A => Boolean): List[A] = 
 
-  def flatten[A](x: List[List[A]]): List[A] = ???
+  def append[A](x: List[A], y: List[A]): List[A] = 
 
-  def flatMap[A, B](x: List[A], f: A => List[B]): List[B] = ???
+  def flatten[A](x: List[List[A]]): List[A] = 
+
+  def flatMap[A, B](x: List[A], f: A => List[B]): List[B] = 
 
   // Maximum of the empty list is 0
-  def maximum(x: List[Int]): Int = ???
+  def maximum(x: List[Int]): Int = 
 
-  def reverse[A](x: List[A]): List[A] = ???
+  def reverse[A](x: List[A]): List[A] = 
 
 }
